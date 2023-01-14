@@ -6,7 +6,7 @@ import axiosClient from "@/libs/axiosClient";
 
 export default function login() {
   const router = useRouter();
-  const [emailErrText, setEmailErrText] = useState<string>("");
+  const [usernameErrText, setUsernameErrText] = useState<string>("");
   const [passwordErrText, setPasswordErrText] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -18,17 +18,17 @@ export default function login() {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    setEmailErrText("");
+    setUsernameErrText("");
     setPasswordErrText("");
     // 入力欄の文字列を取得
-    const email: string = event.target.email.value;
+    const username: string = event.target.username.value;
     const password: string = event.target.password.value;
 
     let error: boolean = false;
 
-    if (email === "") {
+    if (username === "") {
       error = true;
-      setEmailErrText("名前を入力してください");
+      setUsernameErrText("名前を入力してください");
     }
     if (password === "") {
       error = true;
@@ -44,13 +44,11 @@ export default function login() {
     try {
       await axiosClient.get("/sanctum/csrf-cookie");
       const loginRes = await axiosClient.post("/api/login", {
-        email,
+        username,
         password,
       });
       // ログイン成功したらトップページへ
-      //   router.push("/");
-      alert("ログインしました");
-      console.log(loginRes);
+      router.push("/");
     } catch (error) {
       // ログイン失敗
       alert("ユーザ名かパスワードが間違っています");
@@ -62,13 +60,13 @@ export default function login() {
       <Box component="form" onSubmit={handleSubmit} noValidate>
         <TextField
           fullWidth
-          id="email"
+          id="username"
           label="メールアドレス"
           margin="normal"
-          name="email"
+          name="username"
           required
-          helperText={emailErrText}
-          error={emailErrText !== ""}
+          helperText={usernameErrText}
+          error={usernameErrText !== ""}
           disabled={loading}
         />
         <TextField
