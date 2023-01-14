@@ -10,12 +10,6 @@ export default function login() {
   const [passwordErrText, setPasswordErrText] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
-  const getUsers = () => {
-    axiosClient.get("/api/users").then((res) => {
-      console.log(res.data);
-    });
-  };
-
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     setUsernameErrText("");
@@ -48,7 +42,7 @@ export default function login() {
         password,
       });
       // ログイン成功したらトップページへ
-      router.push("/");
+      router.push("home");
     } catch (error) {
       // ログイン失敗
       alert("ユーザ名かパスワードが間違っています");
@@ -93,7 +87,6 @@ export default function login() {
         </LoadingButton>
       </Box>
       <Button onClick={() => router.push("/register")}>新規登録</Button>
-      <button onClick={getUsers}>User 一覧</button>
     </>
   );
 }
