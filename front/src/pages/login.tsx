@@ -3,12 +3,15 @@ import { Box, TextField, Button } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { useRouter } from "next/router";
 import axiosClient from "@/libs/axiosClient";
+import { currentUserState } from "@/state/currentUser";
+import { useRecoilState } from "recoil";
 
 export default function login() {
   const router = useRouter();
   const [usernameErrText, setUsernameErrText] = useState<string>("");
   const [passwordErrText, setPasswordErrText] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -41,10 +44,12 @@ export default function login() {
         username,
         password,
       });
+      setCurrentUser(loginRes.data.username);
       // ログイン成功したらトップページへ
       router.push("home");
     } catch (error) {
       // ログイン失敗
+      console.log(error);
       alert("ユーザ名かパスワードが間違っています");
       setLoading(false);
     }
@@ -55,7 +60,7 @@ export default function login() {
         <TextField
           fullWidth
           id="username"
-          label="メールアドレス"
+          label="ユーザ名"
           margin="normal"
           name="username"
           required
