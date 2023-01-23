@@ -44,7 +44,7 @@ export default function login() {
         username,
         password,
       });
-      setCurrentUser(loginRes.data.username);
+      setCurrentUser({ id: loginRes.data.id, name: loginRes.data.username });
       // ログイン成功したらトップページへ
       router.push("home");
     } catch (error) {

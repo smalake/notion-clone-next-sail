@@ -61,7 +61,7 @@ function register() {
         password,
       });
       // 新規登録に成功したらトップページへ
-      router.push("/");
+      router.push("/home");
     } catch (error: any) {
       // 新規登録に失敗
       setLoading(false);
