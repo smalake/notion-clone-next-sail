@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\MemoController;
 use App\Http\Controllers\AuthUserController;
 
 /*
@@ -22,7 +23,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth:sanctum')->get('auth-user', [AuthUserController::class, 'authUser']);
 Route::post('login', [LoginController::class, 'login']);
 Route::post('logout', [LoginController::class, 'logout']);
 Route::post('register', [RegisterController::class, 'register']);
+Route::middleware('auth:sanctum')->get('auth-user', [AuthUserController::class, 'authUser']);
+Route::middleware('auth:sanctum')->post('memo', [MemoController::class, 'create']);
+Route::middleware('auth:sanctum')->get('memo', [MemoController::class, 'getAll']);
